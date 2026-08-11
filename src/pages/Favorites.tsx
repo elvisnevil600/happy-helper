@@ -19,39 +19,54 @@ const Favorites = () => {
     <>
       <CelestialBackground />
       <AppHeader />
-      <main className="container py-10 md:py-14">
+      <main className="container pb-16 pt-8 md:pt-12">
         <header className="mx-auto max-w-2xl text-center animate-fade-in">
-          <p className="text-xs uppercase tracking-[0.3em] text-gold">✦ Treasured ✦</p>
-          <h1 className="mt-3 font-display text-3xl md:text-5xl font-semibold text-foreground">
+          <p className="text-[11px] uppercase tracking-[0.3em] text-gold">
+            ✦ Treasured ✦
+          </p>
+          <h1 className="mt-3 font-display text-[1.75rem] font-semibold leading-tight text-foreground md:text-5xl">
             Your Favorites
           </h1>
-          <p className="mt-4 text-muted-foreground">
+          <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-muted-foreground md:text-base">
             Hymns you've saved to return to in worship.
           </p>
         </header>
 
-        <section className="mt-12">
+        <section className="mt-8 md:mt-12">
           {loading ? (
-            <p className="text-center text-muted-foreground">Loading…</p>
+            <div className="grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3 xl:grid-cols-4">
+              <span className="sr-only">Loading…</span>
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="h-[104px] animate-pulse rounded-2xl border border-border/50 bg-card/60"
+                />
+              ))}
+            </div>
           ) : list.length === 0 ? (
-            <div className="mx-auto max-w-md rounded-3xl border border-dashed border-border bg-card/60 p-12 text-center">
-              <Heart className="mx-auto h-10 w-10 text-muted-foreground" />
-              <h2 className="mt-4 font-display text-xl text-foreground">
+            <div className="mx-auto max-w-md rounded-3xl border border-dashed border-border bg-card/60 px-6 py-14 text-center">
+              <Heart className="mx-auto h-9 w-9 text-muted-foreground" aria-hidden />
+              <h2 className="mt-4 font-display text-lg text-foreground">
                 No favorites yet
               </h2>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Tap the heart on any hymn to save it here.
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                Tap the heart on any hymn to keep it here for quick access.
               </p>
-              <Button asChild className="mt-6 rounded-full">
+              <Button asChild className="mt-6 h-11 rounded-full px-6">
                 <Link to="/">Browse hymns</Link>
               </Button>
             </div>
           ) : (
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {list.map((h) => (
-                <HymnCard key={h.number} hymn={h} />
-              ))}
-            </div>
+            <>
+              <p className="mb-4 text-sm text-muted-foreground">
+                {list.length} saved hymn{list.length === 1 ? "" : "s"}
+              </p>
+              <div className="grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3 xl:grid-cols-4">
+                {list.map((h) => (
+                  <HymnCard key={h.number} hymn={h} />
+                ))}
+              </div>
+            </>
           )}
         </section>
       </main>

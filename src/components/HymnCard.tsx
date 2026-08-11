@@ -24,36 +24,38 @@ const HymnCard = ({ hymn }: Props) => {
     <article className="group relative">
       <Link
         to={`/hymn/${hymn.number}`}
-        className="block h-full rounded-2xl border border-border/60 bg-card p-5 shadow-soft transition-all hover:-translate-y-0.5 hover:border-gold/60 hover:shadow-sacred"
+        className="flex h-full items-start gap-4 rounded-2xl border border-border/60 bg-card/90 p-4 shadow-soft transition-all hover:border-gold/60 hover:shadow-sacred focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:flex-col sm:p-5"
       >
-        <div className="flex items-start justify-between gap-3">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-parchment border border-gold/40 font-display text-sm font-semibold text-gold">
-            {hymn.number}
-          </div>
-          <button
-            type="button"
-            aria-label={fav ? "Remove favorite" : "Add favorite"}
-            onClick={(e) => {
-              e.preventDefault();
-              toggle(hymn.number);
-            }}
-            className={cn(
-              "rounded-full p-2 transition-colors",
-              fav
-                ? "text-destructive"
-                : "text-muted-foreground hover:text-destructive",
-            )}
-          >
-            <Heart className={cn("h-4 w-4", fav && "fill-current")} />
-          </button>
-        </div>
-        <h3 className="mt-4 font-display text-base font-semibold leading-snug text-foreground group-hover:text-gold transition-colors">
-          {hymn.title}
-        </h3>
-        <p className="mt-2 line-clamp-2 text-sm italic text-muted-foreground">
-          {preview}
-        </p>
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-gold/40 bg-parchment font-display text-sm font-semibold text-gold">
+          {hymn.number}
+        </span>
+        <span className="min-w-0 flex-1">
+          <h3 className="font-display text-base font-semibold leading-snug text-foreground transition-colors group-hover:text-gold sm:mt-3">
+            {hymn.title}
+          </h3>
+          <p className="mt-1.5 line-clamp-2 text-sm italic leading-relaxed text-muted-foreground">
+            {preview}
+          </p>
+        </span>
       </Link>
+      <button
+        type="button"
+        aria-label={
+          fav
+            ? `Remove hymn ${hymn.number} from favorites`
+            : `Save hymn ${hymn.number} to favorites`
+        }
+        aria-pressed={fav}
+        onClick={() => toggle(hymn.number)}
+        className={cn(
+          "absolute right-1 top-1 flex h-11 w-11 items-center justify-center rounded-full transition-colors",
+          fav
+            ? "text-destructive"
+            : "text-muted-foreground hover:text-destructive",
+        )}
+      >
+        <Heart className={cn("h-[1.15rem] w-[1.15rem]", fav && "fill-current")} />
+      </button>
     </article>
   );
 };
