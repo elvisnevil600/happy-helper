@@ -5,7 +5,7 @@ import AppHeader from "@/components/AppHeader";
 import CelestialBackground from "@/components/CelestialBackground";
 import { Button } from "@/components/ui/button";
 import { useHymns } from "@/hooks/useHymns";
-import { useFavorites } from "@/hooks/useFavorites";
+import { useFavourites } from "@/hooks/useFavourites";
 import { cn } from "@/lib/utils";
 
 const FONT_KEY = "luo-hymn-font-size";
@@ -14,7 +14,7 @@ const HymnDetail = () => {
   const { number } = useParams();
   const navigate = useNavigate();
   const { hymns, loading } = useHymns();
-  const { isFavorite, toggle } = useFavorites();
+  const { isFavorite, toggle } = useFavourites();
   const [fontSize, setFontSize] = useState(() => {
     const stored = Number(localStorage.getItem(FONT_KEY));
     return stored >= 16 && stored <= 30 ? stored : 19;
@@ -75,7 +75,7 @@ const HymnDetail = () => {
     <>
       <CelestialBackground />
       <AppHeader />
-      <main className="container pb-20 pt-4 md:pt-8 animate-fade-in">
+      <main className="container pb-28 pt-4 md:pt-8 animate-fade-in">
         <div className="mx-auto max-w-3xl">
           <button
             onClick={() => navigate(-1)}
@@ -84,14 +84,14 @@ const HymnDetail = () => {
             <ArrowLeft className="h-4 w-4" aria-hidden /> Back
           </button>
 
-          <article className="mt-2 rounded-3xl border border-border/60 bg-card/95 px-5 py-8 shadow-sacred backdrop-blur md:px-12 md:py-12">
+          <article className="mt-2 rounded-3xl border border-border/60 bg-card/95 px-5 py-8 shadow-elevated backdrop-blur md:px-12 md:py-12">
             <header className="text-center">
-              <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gold shadow-glow md:h-16 md:w-16">
+              <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-brand shadow-glow md:h-16 md:w-16">
                 <span className="font-display text-xl font-semibold text-primary md:text-2xl">
                   {hymn.number}
                 </span>
               </span>
-              <p className="mt-4 text-[10px] uppercase tracking-[0.3em] text-gold ornament">
+              <p className="mt-4 text-[10px] uppercase tracking-[0.3em] text-brand ornament">
                 Hymn
               </p>
               <h1 className="mt-3 font-display text-2xl font-semibold leading-snug text-foreground md:text-4xl">
@@ -154,11 +154,11 @@ const HymnDetail = () => {
                     className={cn(
                       "relative pl-8",
                       isChorus &&
-                        "rounded-xl border-l-2 border-gold/50 bg-parchment/60 py-3 pr-4",
+                        "rounded-xl border-l-2 border-primary/50 bg-secondary/60 py-3 pr-4",
                     )}
                   >
                     {stanzaNum && (
-                      <span className="absolute left-0 top-0 font-display text-sm font-semibold text-gold">
+                      <span className="absolute left-0 top-0 font-display text-sm font-semibold text-brand">
                         {stanzaNum}.
                       </span>
                     )}
@@ -170,7 +170,7 @@ const HymnDetail = () => {
               })}
             </div>
 
-            <div className="mt-12 flex items-center justify-center text-gold/70">
+            <div className="mt-12 flex items-center justify-center text-brand/70">
               <span className="font-display text-lg" aria-hidden>✦ ✦ ✦</span>
             </div>
           </article>

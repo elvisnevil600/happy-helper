@@ -28,9 +28,9 @@ const Index = () => {
     <>
       <CelestialBackground />
       <AppHeader />
-      <main className="container pb-16 pt-8 md:pt-12">
+      <main className="container pb-28 pt-8 md:pt-12">
         <section className="mx-auto max-w-2xl text-center animate-fade-in">
-          <p className="text-[11px] uppercase tracking-[0.3em] text-gold">
+          <p className="text-[11px] uppercase tracking-[0.3em] text-brand">
             ✦ Wer mag Lemo ✦
           </p>
           <h1 className="mt-3 font-display text-[1.75rem] font-semibold leading-tight text-foreground md:text-5xl">
@@ -57,7 +57,7 @@ const Index = () => {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search by number, title, or lyrics…"
-              className="h-12 rounded-full border-border/70 bg-card/90 pl-11 pr-12 text-base shadow-soft focus-visible:ring-gold/40"
+              className="h-12 rounded-full border-border/70 bg-card/90 pl-11 pr-12 text-base shadow-soft focus-visible:ring-primary/40"
             />
             {query && (
               <button

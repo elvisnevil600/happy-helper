@@ -17,7 +17,7 @@ const NotFound = () => {
       <AppHeader />
       <main className="container flex min-h-[60dvh] items-center justify-center py-16">
         <div className="mx-auto max-w-md rounded-3xl border border-dashed border-border bg-card/60 px-6 py-14 text-center">
-          <p className="text-[11px] uppercase tracking-[0.3em] text-gold">✦ 404 ✦</p>
+          <p className="text-[11px] uppercase tracking-[0.3em] text-brand">✦ 404 ✦</p>
           <h1 className="mt-3 font-display text-2xl font-semibold text-foreground">
             Page not found
           </h1>
