@@ -12,7 +12,6 @@ const HymnCard = ({ hymn }: Props) => {
   const { isFavorite, toggle } = useFavorites();
   const fav = isFavorite(hymn.number);
 
-  // Show first non-empty stanza line as preview
   const preview =
     hymn.lyrics
       .split("\n")
@@ -24,16 +23,16 @@ const HymnCard = ({ hymn }: Props) => {
     <article className="group relative">
       <Link
         to={`/hymn/${hymn.number}`}
-        className="flex h-full items-start gap-4 rounded-2xl border border-border/60 bg-card/90 p-4 shadow-soft transition-all hover:border-gold/60 hover:shadow-sacred focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:flex-col sm:p-5"
+        className="flex h-full items-start gap-4 rounded-2xl border border-border/70 bg-surface p-4 pr-14 shadow-soft transition-all hover:border-primary/60 hover:shadow-elevated focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
       >
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-gold/40 bg-parchment font-display text-sm font-semibold text-gold">
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand font-display text-sm font-semibold text-primary-foreground">
           {hymn.number}
         </span>
         <span className="min-w-0 flex-1">
-          <h3 className="font-display text-base font-semibold leading-snug text-foreground transition-colors group-hover:text-gold sm:mt-3">
+          <h3 className="font-display text-base font-semibold leading-snug text-foreground transition-colors group-hover:text-brand">
             {hymn.title}
           </h3>
-          <p className="mt-1.5 line-clamp-2 text-sm italic leading-relaxed text-muted-foreground">
+          <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
             {preview}
           </p>
         </span>
@@ -42,16 +41,14 @@ const HymnCard = ({ hymn }: Props) => {
         type="button"
         aria-label={
           fav
-            ? `Remove hymn ${hymn.number} from favorites`
-            : `Save hymn ${hymn.number} to favorites`
+            ? `Remove hymn ${hymn.number} from favourites`
+            : `Save hymn ${hymn.number} to favourites`
         }
         aria-pressed={fav}
         onClick={() => toggle(hymn.number)}
         className={cn(
           "absolute right-1 top-1 flex h-11 w-11 items-center justify-center rounded-full transition-colors",
-          fav
-            ? "text-destructive"
-            : "text-muted-foreground hover:text-destructive",
+          fav ? "text-primary" : "text-muted-foreground hover:text-primary",
         )}
       >
         <Heart className={cn("h-[1.15rem] w-[1.15rem]", fav && "fill-current")} />
