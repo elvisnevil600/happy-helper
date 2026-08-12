@@ -5,7 +5,7 @@ import AppHeader from "@/components/AppHeader";
 import CelestialBackground from "@/components/CelestialBackground";
 import { Button } from "@/components/ui/button";
 import { useHymns } from "@/hooks/useHymns";
-import { useFavourites } from "@/hooks/useFavourites";
+import { useFavorites } from "@/hooks/useFavorites";
 import { cn } from "@/lib/utils";
 
 const FONT_KEY = "luo-hymn-font-size";
@@ -14,7 +14,7 @@ const HymnDetail = () => {
   const { number } = useParams();
   const navigate = useNavigate();
   const { hymns, loading } = useHymns();
-  const { isFavorite, toggle } = useFavourites();
+  const { isFavorite, toggle } = useFavorites();
   const [fontSize, setFontSize] = useState(() => {
     const stored = Number(localStorage.getItem(FONT_KEY));
     return stored >= 16 && stored <= 30 ? stored : 19;

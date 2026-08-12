@@ -5,14 +5,14 @@ import CelestialBackground from "@/components/CelestialBackground";
 import HymnCard from "@/components/HymnCard";
 import { Button } from "@/components/ui/button";
 import { useHymns } from "@/hooks/useHymns";
-import { useFavourites } from "@/hooks/useFavourites";
+import { useFavorites } from "@/hooks/useFavorites";
 
-const Favourites = () => {
+const Favorites = () => {
   const { hymns, loading } = useHymns();
-  const { favourites } = useFavourites();
+  const { favorites } = useFavorites();
 
   const list = hymns
-    .filter((h) => favourites.includes(h.number))
+    .filter((h) => favorites.includes(h.number))
     .sort((a, b) => a.number - b.number);
 
   return (
@@ -74,4 +74,4 @@ const Favourites = () => {
   );
 };
 
-export default Favourites;
+export default Favorites;
