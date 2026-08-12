@@ -91,7 +91,7 @@ const HymnDetail = () => {
                   {hymn.number}
                 </span>
               </span>
-              <p className="mt-4 text-[10px] uppercase tracking-[0.3em] text-brand ornament">
+              <p className="mt-4 text-[10px] uppercase tracking-[0.3em] text-brand">
                 Hymn
               </p>
               <h1 className="mt-3 font-display text-2xl font-semibold leading-snug text-foreground md:text-4xl">
@@ -171,7 +171,7 @@ const HymnDetail = () => {
             </div>
 
             <div className="mt-12 flex items-center justify-center text-brand/70">
-              <span className="font-display text-lg" aria-hidden>✦ ✦ ✦</span>
+              <span className="h-px w-24 rounded-full bg-brand" aria-hidden />
             </div>
           </article>
 
