@@ -86,8 +86,8 @@ const HymnDetail = () => {
 
           <article className="mt-2 rounded-3xl border border-border/60 bg-card/95 px-5 py-8 shadow-elevated backdrop-blur md:px-12 md:py-12">
             <header className="text-center">
-              <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-brand shadow-glow md:h-16 md:w-16">
-                <span className="font-display text-xl font-semibold text-primary md:text-2xl">
+              <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-brand shadow-glow md:h-16 md:w-16">
+                <span className="font-display text-xl font-semibold text-primary-foreground md:text-2xl">
                   {hymn.number}
                 </span>
               </span>
