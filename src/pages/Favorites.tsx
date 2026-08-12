@@ -19,13 +19,13 @@ const Favorites = () => {
     <>
       <CelestialBackground />
       <AppHeader />
-      <main className="container pb-16 pt-8 md:pt-12">
+      <main className="container pb-28 pt-8 md:pt-12">
         <header className="mx-auto max-w-2xl text-center animate-fade-in">
-          <p className="text-[11px] uppercase tracking-[0.3em] text-gold">
+          <p className="text-[11px] uppercase tracking-[0.3em] text-brand">
             ✦ Treasured ✦
           </p>
           <h1 className="mt-3 font-display text-[1.75rem] font-semibold leading-tight text-foreground md:text-5xl">
-            Your Favorites
+            Your Favourites
           </h1>
           <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-muted-foreground md:text-base">
             Hymns you've saved to return to in worship.
@@ -47,7 +47,7 @@ const Favorites = () => {
             <div className="mx-auto max-w-md rounded-3xl border border-dashed border-border bg-card/60 px-6 py-14 text-center">
               <Heart className="mx-auto h-9 w-9 text-muted-foreground" aria-hidden />
               <h2 className="mt-4 font-display text-lg text-foreground">
-                No favorites yet
+                No favourites yet
               </h2>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                 Tap the heart on any hymn to keep it here for quick access.
