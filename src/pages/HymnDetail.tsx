@@ -162,7 +162,7 @@ const HymnDetail = () => {
                         {stanzaNum}.
                       </span>
                     )}
-                    <p className="whitespace-pre-line font-body italic tracking-[0.005em]">
+                    <p className="whitespace-pre-line font-body tracking-[0.005em]">
                       {rest.join("\n")}
                     </p>
                   </div>

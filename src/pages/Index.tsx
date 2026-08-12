@@ -30,17 +30,21 @@ const Index = () => {
       <AppHeader />
       <main className="container pb-28 pt-8 md:pt-12">
         <section className="mx-auto max-w-2xl text-center animate-fade-in">
-          <p className="text-[11px] uppercase tracking-[0.3em] text-brand">
-            ✦ Wer mag Lemo ✦
+          <p className="text-[11px] uppercase tracking-[0.28em] text-brand">
+            Sing · Worship · Grow
           </p>
-          <h1 className="mt-3 font-display text-[1.75rem] font-semibold leading-tight text-foreground md:text-5xl">
+          <h1 className="mt-3 font-display text-[1.9rem] font-semibold leading-tight text-foreground md:text-5xl rule">
             Luo Hymnal
           </h1>
-          <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-muted-foreground md:text-base">
-            A sacred collection of {hymns.length || 267} hymns — sung in
-            worship, treasured in heart.
+          <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-muted-foreground md:text-base">
+            Digital Luo Christian hymns — {hymns.length || 267} hymns to browse,
+            search and treasure.
+          </p>
+          <p className="mt-2 text-[11px] uppercase tracking-[0.18em] text-muted-foreground/80">
+            A Ministry of the African Inland Church (AIC)
           </p>
         </section>
+
 
         <div className="sticky top-16 z-30 -mx-6 mt-6 bg-background/85 px-6 py-3 backdrop-blur-md md:static md:mx-0 md:mt-8 md:bg-transparent md:px-0 md:py-0 md:backdrop-blur-none">
           <div className="relative mx-auto max-w-2xl">
