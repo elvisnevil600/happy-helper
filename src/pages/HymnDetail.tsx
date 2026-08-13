@@ -6,22 +6,25 @@ import CelestialBackground from "@/components/CelestialBackground";
 import { Button } from "@/components/ui/button";
 import { useHymns } from "@/hooks/useHymns";
 import { useFavorites } from "@/hooks/useFavorites";
+import { useRecentlyViewed } from "@/hooks/useRecentlyViewed";
+import {
+  FONT_MAX,
+  FONT_MIN,
+  getFontSize,
+  setFontSize as persistFontSize,
+} from "@/services/personalLibrary/store";
 import { cn } from "@/lib/utils";
-
-const FONT_KEY = "luo-hymn-font-size";
 
 const HymnDetail = () => {
   const { number } = useParams();
   const navigate = useNavigate();
   const { hymns, loading } = useHymns();
   const { isFavorite, toggle } = useFavorites();
-  const [fontSize, setFontSize] = useState(() => {
-    const stored = Number(localStorage.getItem(FONT_KEY));
-    return stored >= 16 && stored <= 30 ? stored : 19;
-  });
+  const { record } = useRecentlyViewed();
+  const [fontSize, setFontSize] = useState(getFontSize);
 
   useEffect(() => {
-    localStorage.setItem(FONT_KEY, String(fontSize));
+    persistFontSize(fontSize);
   }, [fontSize]);
 
   const num = Number(number);
@@ -30,6 +33,10 @@ const HymnDetail = () => {
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, [num]);
+
+  useEffect(() => {
+    if (hymn) record(hymn.number);
+  }, [hymn?.number]);
 
   const stanzas = useMemo(() => {
     if (!hymn) return [];
@@ -117,7 +124,7 @@ const HymnDetail = () => {
                   variant="ghost"
                   size="icon"
                   className="h-9 w-9 rounded-full"
-                  onClick={() => setFontSize((s) => Math.max(16, s - 2))}
+                  onClick={() => setFontSize((s) => Math.max(FONT_MIN, s - 2))}
                   aria-label="Decrease text size"
                 >
                   <Minus className="h-4 w-4" />
@@ -129,7 +136,7 @@ const HymnDetail = () => {
                   variant="ghost"
                   size="icon"
                   className="h-9 w-9 rounded-full"
-                  onClick={() => setFontSize((s) => Math.min(30, s + 2))}
+                  onClick={() => setFontSize((s) => Math.min(FONT_MAX, s + 2))}
                   aria-label="Increase text size"
                 >
                   <Plus className="h-4 w-4" />

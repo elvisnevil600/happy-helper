@@ -1,11 +1,12 @@
 import { Link, useLocation } from "react-router-dom";
-import { BookOpen, Heart } from "lucide-react";
+import { BookOpen, Heart, History } from "lucide-react";
 import BrandMark from "@/components/BrandMark";
 import { cn } from "@/lib/utils";
 
 const items = [
   { to: "/", label: "Hymns", Icon: BookOpen },
   { to: "/favorites", label: "Favourites", Icon: Heart },
+  { to: "/recent", label: "Recent", Icon: History },
 ];
 
 const AppHeader = () => {
