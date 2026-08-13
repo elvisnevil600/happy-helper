@@ -5,24 +5,16 @@ import CelestialBackground from "@/components/CelestialBackground";
 import HymnCard from "@/components/HymnCard";
 import { Input } from "@/components/ui/input";
 import { useHymns } from "@/hooks/useHymns";
+import { searchHymns } from "@/services/search/hymnSearch";
 
 const Index = () => {
   const { hymns, loading, error } = useHymns();
   const [query, setQuery] = useState("");
 
-  const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    if (!q) return hymns;
-    const asNum = Number(q);
-    return hymns.filter((h) => {
-      if (!Number.isNaN(asNum) && h.number === asNum) return true;
-      return (
-        h.title.toLowerCase().includes(q) ||
-        h.lyrics.toLowerCase().includes(q) ||
-        String(h.number).includes(q)
-      );
-    });
-  }, [hymns, query]);
+  const filtered = useMemo(
+    () => searchHymns(hymns, query).map((r) => r.hymn),
+    [hymns, query],
+  );
 
   return (
     <>
