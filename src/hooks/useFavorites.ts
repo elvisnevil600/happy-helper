@@ -1,36 +1,20 @@
 import { useCallback, useEffect, useState } from "react";
-
-const KEY = "luo-hymn-favorites";
-
-function read(): number[] {
-  try {
-    const raw = localStorage.getItem(KEY);
-    return raw ? JSON.parse(raw) : [];
-  } catch {
-    return [];
-  }
-}
+import {
+  getFavorites,
+  subscribe,
+  toggleFavorite,
+} from "@/services/personalLibrary/store";
 
 export function useFavorites() {
   const [favorites, setFavorites] = useState<number[]>([]);
 
   useEffect(() => {
-    setFavorites(read());
-    const onStorage = (e: StorageEvent) => {
-      if (e.key === KEY) setFavorites(read());
-    };
-    window.addEventListener("storage", onStorage);
-    return () => window.removeEventListener("storage", onStorage);
+    setFavorites(getFavorites());
+    return subscribe(() => setFavorites(getFavorites()));
   }, []);
 
   const toggle = useCallback((number: number) => {
-    setFavorites((prev) => {
-      const next = prev.includes(number)
-        ? prev.filter((n) => n !== number)
-        : [...prev, number];
-      localStorage.setItem(KEY, JSON.stringify(next));
-      return next;
-    });
+    setFavorites(toggleFavorite(number));
   }, []);
 
   const isFavorite = useCallback(
