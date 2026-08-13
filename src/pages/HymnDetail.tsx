@@ -124,7 +124,7 @@ const HymnDetail = () => {
                   variant="ghost"
                   size="icon"
                   className="h-9 w-9 rounded-full"
-                  onClick={() => setFontSize((s) => Math.max(16, s - 2))}
+                  onClick={() => setFontSize((s) => Math.max(FONT_MIN, s - 2))}
                   aria-label="Decrease text size"
                 >
                   <Minus className="h-4 w-4" />
@@ -136,7 +136,7 @@ const HymnDetail = () => {
                   variant="ghost"
                   size="icon"
                   className="h-9 w-9 rounded-full"
-                  onClick={() => setFontSize((s) => Math.min(30, s + 2))}
+                  onClick={() => setFontSize((s) => Math.min(FONT_MAX, s + 2))}
                   aria-label="Increase text size"
                 >
                   <Plus className="h-4 w-4" />
