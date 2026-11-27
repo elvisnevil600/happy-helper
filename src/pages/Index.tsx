@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react";
 import { ArrowRight, BookOpen, Search, X } from "lucide-react";
 import { Link } from "react-router-dom";
-import coverImage from "@/assets/luo-hymnal-cover.jpg.asset.json";
 import AppHeader from "@/components/AppHeader";
 import CelestialBackground from "@/components/CelestialBackground";
 import HymnCard from "@/components/HymnCard";
@@ -21,7 +20,7 @@ const hymnSections = [
   { title: "Wende Sawo", start: 149, end: 164 },
   { title: "Chier", start: 165, end: 166 },
   { title: "Polo", start: 167, end: 186 },
-  { title: "Warrok", start: 187, end: 213 },
+  { title: "Warrnok", start: 187, end: 213 },
   { title: "Luong", start: 214, end: 227 },
   { title: "Lando Wach", start: 228, end: 236 },
   { title: "Wiro mar Ruodhwa", start: 237, end: 245 },
@@ -41,112 +40,116 @@ const hasEnteredThisSession = () => {
 const Index = () => {
   const { hymns, loading, error } = useHymns();
   const [query, setQuery] = useState("");
-  const [showCover, setShowCover] = useState(() => !hasEnteredThisSession());
-  const [showContents, setShowContents] = useState(false);
+  const [openingPage, setOpeningPage] = useState<number | null>(() => hasEnteredThisSession() ? null : 0);
 
   const filtered = useMemo(
     () => searchHymns(hymns, query).map((r) => r.hymn),
     [hymns, query],
   );
 
-  const enterHymnal = () => {
+  const finishOpeningPages = () => {
     try {
       window.sessionStorage.setItem(ENTRY_SESSION_KEY, "true");
     } catch {
       // Keep the current visit usable even if browser storage is unavailable.
     }
-    setShowCover(false);
-    setShowContents(true);
+    setOpeningPage(null);
   };
 
-  if (showCover) {
+  const paper = "relative mx-auto flex min-h-[min(78svh,48rem)] w-full max-w-[34rem] flex-col overflow-hidden border border-stone-300 bg-[#fffdf7] px-7 py-9 text-stone-900 shadow-[0_18px_50px_rgba(45,35,20,0.22)] sm:px-12 sm:py-12";
+  const pageNav = "flex h-11 items-center justify-center rounded-full border border-stone-400 bg-[#fffdf7] px-5 text-sm font-medium text-stone-800 transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-40";
+
+  if (openingPage !== null) {
     return (
-      <main className="relative flex min-h-[100svh] flex-col items-center justify-between overflow-hidden bg-night px-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-6 text-center">
-        <div aria-hidden className="absolute inset-x-0 top-0 h-1 bg-brand" />
-        <div className="relative z-10 flex w-full max-w-md items-center justify-center gap-3 text-[11px] font-semibold uppercase text-muted-foreground">
-          <span aria-hidden className="h-px w-8 bg-primary/70" />
-          AIC Digital Hymnal
-          <span aria-hidden className="h-px w-8 bg-primary/70" />
-        </div>
+      <main className="min-h-[100svh] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-stone-100 via-stone-200 to-stone-300 px-4 py-5 sm:px-6 sm:py-8">
+        <div className="mx-auto flex max-w-[42rem] flex-col items-center">
+          <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.25em] text-stone-600">AIC Digital Hymnal</p>
 
-        <section className="relative z-10 flex w-full max-w-md flex-1 flex-col items-center justify-center py-6 md:py-10">
-          <img
-            src={coverImage.url}
-            alt="Green cover of Kitap Wend Nyasaye Molos Manyien, the Dholuo hymnal"
-            className="h-[48svh] min-h-56 max-h-[34rem] w-auto max-w-[82vw] object-contain drop-shadow-[0_18px_24px_rgba(0,0,0,0.28)]"
-          />
-          <p className="mt-5 text-xs font-semibold uppercase text-brand">
-            Sing · Worship · Grow
-          </p>
-          <h1 className="mt-2 font-display text-3xl font-semibold leading-tight text-foreground sm:text-4xl">
-            Luo Hymnal
-          </h1>
-          <p className="mt-2 max-w-xs text-sm leading-relaxed text-muted-foreground">
-            {hymns.length || 267} Dholuo hymns for worship, wherever you gather.
-          </p>
-        </section>
+          {openingPage === 0 && (
+            <section className={paper + " items-center justify-between bg-[#164b36] text-center text-[#f8f0d8] border-[#bda978]"}>
+              <div className="absolute inset-3 border border-[#c9b783]/60" aria-hidden />
+              <p className="relative mt-4 text-[10px] uppercase tracking-[0.35em] text-[#d8c99f]">African Inland Church</p>
+              <div className="relative flex flex-1 flex-col items-center justify-center">
+                <BookOpen className="mb-8 h-16 w-16 stroke-[1.1] text-[#e8d9ad]" aria-hidden />
+                <h1 className="font-serif text-3xl font-bold leading-tight tracking-wide sm:text-4xl">DHOLUO HYMNS</h1>
+                <p className="mt-5 font-serif text-xl tracking-wide text-[#e8d9ad]">KITAP WEND NYASAYE</p>
+                <p className="mt-2 font-serif text-sm tracking-[0.22em] text-[#e8d9ad]">MOLOS MANYIEN</p>
+              </div>
+              <p className="relative mb-4 text-[10px] uppercase tracking-[0.28em] text-[#d8c99f]">Sing · Worship · Grow</p>
+            </section>
+          )}
 
-        <div className="relative z-10 w-full max-w-sm">
-          <Button
-            type="button"
-            onClick={enterHymnal}
-            className="h-14 w-full rounded-full text-base font-semibold shadow-glow"
-          >
-            Open hymnal <ArrowRight className="h-5 w-5" aria-hidden />
-          </Button>
-          <p className="mt-4 text-xs text-muted-foreground">
-            A Ministry of the African Inland Church
-          </p>
+          {openingPage === 1 && (
+            <section className={paper + " items-center justify-between text-center"}>
+              <div className="mt-8 flex flex-1 flex-col items-center justify-center">
+                <BookOpen className="mb-10 h-16 w-16 stroke-[1.1] text-stone-800" aria-hidden />
+                <h1 className="font-serif text-3xl font-bold leading-tight tracking-wide sm:text-4xl">DHOLUO HYMNS</h1>
+                <p className="mt-6 font-serif text-xl tracking-wide">KITAP WEND NYASAYE</p>
+                <p className="mt-2 font-serif text-sm tracking-[0.22em]">MOLOS MANYIEN</p>
+              </div>
+              <p className="mb-4 font-serif text-xs tracking-[0.18em] text-stone-500">AFRICAN INLAND CHURCH</p>
+            </section>
+          )}
+
+          {openingPage === 2 && (
+            <section className={paper}>
+              <header className="mb-6 text-center">
+                <p className="font-serif text-[10px] uppercase tracking-[0.2em] text-stone-500">Kitap Wend Nyasaye · Molos Manyien</p>
+                <h1 className="mt-3 font-serif text-2xl font-bold">Weche Mantie e Buk</h1>
+              </header>
+              <div className="flex-1">
+                {hymnSections.map((section) => {
+                  const firstHymn = hymns.find((h) => h.number === section.start);
+                  return (
+                    <Link key={section.title} to={"/hymn/" + section.start} className="flex min-h-9 items-center justify-between gap-3 border-b border-stone-200 py-2 font-serif text-[13px] transition-colors hover:bg-amber-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-800">
+                      <span className="min-w-0">
+                        <span className="block font-semibold">{section.title}</span>
+                        <span className="block truncate text-[10px] text-stone-500">{firstHymn ? firstHymn.title : "Wende " + section.start}</span>
+                      </span>
+                      <span className="shrink-0 tabular-nums text-stone-600">{section.start === section.end ? section.start : section.start + "–" + section.end}</span>
+                    </Link>
+                  );
+                })}
+              </div>
+              <p className="mt-5 text-center font-serif text-[10px] text-stone-500">267 Wende</p>
+            </section>
+          )}
+
+          {openingPage === 3 && (
+            <section className={paper + " gap-5"}>
+              <header className="text-center">
+                <h1 className="font-serif text-xl font-bold">Ayie mar Joote</h1>
+                <p className="mt-1 font-serif text-xs italic text-stone-500">Apostles’ Creed</p>
+              </header>
+              <p className="font-serif text-[13px] leading-[1.8]">Ayie kuom Nyasaye Wuonwa, manyalo gik moko duto. Jacheuech polo gi piny, kendo kuom Yesu Kristo Wuode ma Miderma, ma nochako e teko mar Roho Maler, ma nywol kuom Maria Nyako Maler, ma ochand kuom Pontio Pilato, ma tho, kendo oyike. Ne odhi e Hades, ne ochier oa kuom joma otho chieng’ mar adek, nodhi malo e polo, obet e bat korachwich mar Nyasaye Wuonwa Manyalo Gik Moko Duto, koa kuno biro ng’ado bura ne joma ngima kod joma otho. Ayie kuom Roho Maler, Kanisa Maler mar Joote, winjruok mar joma maler, weyo richo, chier mar ringruok, kendo ngima mar higni gi higni. Amen.</p>
+              <div className="border-t border-stone-200 pt-4 text-center">
+                <h2 className="font-serif text-lg font-bold">Lamo mar Ruoth</h2>
+                <p className="mt-1 font-serif text-xs italic text-stone-500">Lord’s Prayer</p>
+              </div>
+              <p className="font-serif text-[13px] leading-[1.8]">Wuonwa manie polo, Nyingi mondo obed maler. Piny Ruoth mari obi, Gima idwaro mondo otimre epiny, kaka timore epolo. Imiwa tinende chiembwa mar tinende, iwenwa eriehowa, kaka wawe yo ni joma timonwa marach, kik iterwa kar tem to konywa erieho, nikech piny Ruoth, gi teko, gi duong’, ni kuomi higni gi higni. Amen.</p>
+              <div className="border-t border-stone-200 pt-4 text-center">
+                <h2 className="font-serif text-lg font-bold">Ng’wono</h2>
+                <p className="mt-1 font-serif text-xs italic text-stone-500">The Grace</p>
+              </div>
+              <p className="font-serif text-[13px] leading-[1.8]">Ng’wono mar Ruodhwa Yesu Kristo, gi hera mar Nyasaye Wuoro, gi lalruok mar Roho Maler, obed kodwa duto nyaka chieng’. Amen.</p>
+            </section>
+          )}
+
+          <div className="mt-5 flex w-full max-w-[34rem] items-center justify-between gap-3">
+            <button type="button" className={pageNav} disabled={openingPage === 0} onClick={() => setOpeningPage((p) => p === null ? 0 : Math.max(0, p - 1))}>Previous</button>
+            <span className="text-xs tabular-nums text-stone-600">{openingPage + 1} / 4</span>
+            {openingPage < 3 ? (
+              <button type="button" className={pageNav} onClick={() => setOpeningPage((p) => p === null ? 0 : Math.min(3, p + 1))}>Next</button>
+            ) : (
+              <button type="button" className={pageNav + " border-emerald-800 bg-emerald-800 text-white hover:bg-emerald-900"} onClick={finishOpeningPages}>Begin hymns</button>
+            )}
+          </div>
+          <p className="mt-4 text-center text-[10px] text-stone-500">Tap a section in the contents page to open its hymns directly.</p>
         </div>
       </main>
     );
   }
 
-  if (showContents) {
-    return (
-      <main className="min-h-[100svh] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-stone-100 via-stone-200 to-stone-300 px-4 py-6 sm:px-6 sm:py-10">
-        <div className="mx-auto max-w-2xl">
-          <div className="mx-auto mb-5 flex max-w-[38rem] items-center justify-between gap-3 px-2 text-stone-800">
-            <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-emerald-900">Kitap Wend Nyasaye</p>
-              <h1 className="mt-1 font-display text-3xl font-semibold text-stone-900">Weche Mantie e Buk</h1>
-              <p className="mt-1 text-sm text-stone-600">Select a section to begin reading.</p>
-            </div>
-            <BookOpen className="h-8 w-8 shrink-0 text-emerald-900" aria-hidden />
-          </div>
-          <div className="relative mx-auto max-w-[38rem] overflow-hidden border border-stone-300/80 bg-[#fbf8ef] px-5 py-7 shadow-[0_18px_50px_rgba(45,35,20,0.22)] sm:px-10 sm:py-10 before:pointer-events-none before:absolute before:inset-y-0 before:left-3 before:w-px before:bg-stone-300/70">
-            {hymnSections.map((section) => {
-              const firstHymn = hymns.find((h) => h.number === section.start);
-              return (
-                <Link
-                  key={section.title}
-                  to={"/hymn/" + section.start}
-                  className="relative flex min-h-14 items-center justify-between gap-4 border-b border-stone-300/70 px-3 py-3 last:border-b-0 transition-colors hover:bg-amber-100/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-800"
-                >
-                  <span className="min-w-0">
-                    <span className="block font-serif text-lg font-semibold text-stone-900">{section.title}</span>
-                    <span className="mt-0.5 block truncate font-serif text-xs text-stone-600">
-                      {firstHymn ? firstHymn.title : "Hymn " + section.start}
-                    </span>
-                  </span>
-                  <span className="flex shrink-0 items-center gap-2 font-serif text-sm tabular-nums text-stone-600">
-                    {section.start === section.end ? section.start : section.start + "–" + section.end}
-                    <ArrowRight className="h-4 w-4 text-emerald-900" aria-hidden />
-                  </span>
-                </Link>
-              );
-            })}
-          </div>
-          <Button type="button" variant="outline" onClick={() => setShowContents(false)} className="mx-auto mt-6 flex h-12 w-full max-w-[38rem] rounded-full border-stone-400 bg-stone-100 text-stone-800 hover:bg-white">
-            Browse all 267 hymns
-          </Button>
-          <p className="mx-auto mt-4 max-w-[38rem] text-center text-xs text-stone-600">
-            Select a section above to begin reading, then use the previous and next controls to move through the hymns.
-          </p>
-        </div>
-      </main>
-    );
-  }
 
   return (
     <>
