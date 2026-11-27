@@ -1,20 +1,89 @@
 import { useMemo, useState } from "react";
-import { Search, X } from "lucide-react";
+import { ArrowRight, Search, X } from "lucide-react";
 import AppHeader from "@/components/AppHeader";
+import BrandMark from "@/components/BrandMark";
 import CelestialBackground from "@/components/CelestialBackground";
 import HymnCard from "@/components/HymnCard";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useHymns } from "@/hooks/useHymns";
 import { searchHymns } from "@/services/search/hymnSearch";
 
+const ENTRY_SESSION_KEY = "luo-hymnal-entry-seen";
+
+const hasEnteredThisSession = () => {
+  try {
+    return window.sessionStorage.getItem(ENTRY_SESSION_KEY) === "true";
+  } catch {
+    return false;
+  }
+};
+
 const Index = () => {
   const { hymns, loading, error } = useHymns();
   const [query, setQuery] = useState("");
+  const [showCover, setShowCover] = useState(() => !hasEnteredThisSession());
 
   const filtered = useMemo(
     () => searchHymns(hymns, query).map((r) => r.hymn),
     [hymns, query],
   );
+
+  const enterHymnal = () => {
+    try {
+      window.sessionStorage.setItem(ENTRY_SESSION_KEY, "true");
+    } catch {
+      // Keep the current visit usable even if browser storage is unavailable.
+    }
+    setShowCover(false);
+  };
+
+  if (showCover) {
+    return (
+      <main className="relative flex min-h-[100svh] flex-col items-center justify-between overflow-hidden bg-night px-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-6 text-center">
+        <div aria-hidden className="absolute inset-x-0 top-0 h-1 bg-brand" />
+        <div className="relative z-10 flex w-full max-w-md items-center justify-center gap-3 text-[11px] font-semibold uppercase text-muted-foreground">
+          <span aria-hidden className="h-px w-8 bg-primary/70" />
+          African Inland Church
+          <span aria-hidden className="h-px w-8 bg-primary/70" />
+        </div>
+
+        <section className="relative z-10 flex w-full max-w-md flex-1 flex-col items-center justify-center py-6 md:py-10">
+          <span className="flex h-20 w-20 items-center justify-center rounded-full border border-primary/40 bg-card text-primary-foreground shadow-glow">
+            <BrandMark className="h-14 w-14" />
+          </span>
+          <p className="mt-6 text-xs font-semibold uppercase text-brand">
+            Sing · Worship · Grow
+          </p>
+          <h1 className="mt-3 font-display text-4xl font-semibold leading-tight text-foreground sm:text-5xl">
+            Luo Hymnal
+          </h1>
+          <p className="mt-2 font-display text-lg text-muted-foreground">
+            Wende Nyasaye
+          </p>
+          <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
+            Digital Luo Christian hymns for worship, wherever you gather.
+          </p>
+          <p className="mt-4 text-sm font-medium text-foreground">
+            {hymns.length || 267} hymns
+          </p>
+        </section>
+
+        <div className="relative z-10 w-full max-w-sm">
+          <Button
+            type="button"
+            onClick={enterHymnal}
+            className="h-14 w-full rounded-full text-base font-semibold shadow-glow"
+          >
+            Open hymnal <ArrowRight className="h-5 w-5" aria-hidden />
+          </Button>
+          <p className="mt-4 text-xs text-muted-foreground">
+            A Ministry of the African Inland Church
+          </p>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <>
