@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { ArrowRight, Search, X } from "lucide-react";
+import coverImage from "@/assets/luo-hymnal-cover.jpg.asset.json";
 import AppHeader from "@/components/AppHeader";
-import BrandMark from "@/components/BrandMark";
 import CelestialBackground from "@/components/CelestialBackground";
 import HymnCard from "@/components/HymnCard";
 import { Button } from "@/components/ui/button";
@@ -44,28 +44,24 @@ const Index = () => {
         <div aria-hidden className="absolute inset-x-0 top-0 h-1 bg-brand" />
         <div className="relative z-10 flex w-full max-w-md items-center justify-center gap-3 text-[11px] font-semibold uppercase text-muted-foreground">
           <span aria-hidden className="h-px w-8 bg-primary/70" />
-          African Inland Church
+          AIC Digital Hymnal
           <span aria-hidden className="h-px w-8 bg-primary/70" />
         </div>
 
         <section className="relative z-10 flex w-full max-w-md flex-1 flex-col items-center justify-center py-6 md:py-10">
-          <span className="flex h-20 w-20 items-center justify-center rounded-full border border-primary/40 bg-card text-primary-foreground shadow-glow">
-            <BrandMark className="h-14 w-14" />
-          </span>
-          <p className="mt-6 text-xs font-semibold uppercase text-brand">
+          <img
+            src={coverImage.url}
+            alt="Green cover of Kitap Wend Nyasaye Molos Manyien, the Dholuo hymnal"
+            className="h-[40svh] min-h-48 max-h-80 w-auto max-w-[70vw] rounded-sm border border-border/40 object-cover shadow-elevated"
+          />
+          <p className="mt-5 text-xs font-semibold uppercase text-brand">
             Sing · Worship · Grow
           </p>
-          <h1 className="mt-3 font-display text-4xl font-semibold leading-tight text-foreground sm:text-5xl">
+          <h1 className="mt-2 font-display text-3xl font-semibold leading-tight text-foreground sm:text-4xl">
             Luo Hymnal
           </h1>
-          <p className="mt-2 font-display text-lg text-muted-foreground">
-            Wende Nyasaye
-          </p>
-          <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
-            Digital Luo Christian hymns for worship, wherever you gather.
-          </p>
-          <p className="mt-4 text-sm font-medium text-foreground">
-            {hymns.length || 267} hymns
+          <p className="mt-2 max-w-xs text-sm leading-relaxed text-muted-foreground">
+            {hymns.length || 267} Dholuo hymns for worship, wherever you gather.
           </p>
         </section>
 
