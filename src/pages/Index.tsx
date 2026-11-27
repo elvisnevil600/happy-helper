@@ -73,7 +73,7 @@ const Index = () => {
           <img
             src={coverImage.url}
             alt="Green cover of Kitap Wend Nyasaye Molos Manyien, the Dholuo hymnal"
-            className="h-[40svh] min-h-48 max-h-80 w-auto max-w-[70vw] rounded-sm border border-border/40 object-cover shadow-elevated"
+            className="h-[48svh] min-h-56 max-h-[34rem] w-auto max-w-[82vw] object-contain drop-shadow-[0_18px_24px_rgba(0,0,0,0.28)]"
           />
           <p className="mt-5 text-xs font-semibold uppercase text-brand">
             Sing · Worship · Grow
@@ -104,43 +104,43 @@ const Index = () => {
 
   if (showContents) {
     return (
-      <main className="min-h-[100svh] bg-background px-4 pb-10 pt-8 sm:px-6">
-        <div className="mx-auto max-w-3xl">
-          <div className="mb-6 flex items-center justify-between gap-3">
+      <main className="min-h-[100svh] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-stone-100 via-stone-200 to-stone-300 px-4 py-6 sm:px-6 sm:py-10">
+        <div className="mx-auto max-w-2xl">
+          <div className="mx-auto mb-5 flex max-w-[38rem] items-center justify-between gap-3 px-2 text-stone-800">
             <div>
-              <p className="text-[11px] uppercase tracking-[0.22em] text-brand">Kitap Wend Nyasaye</p>
-              <h1 className="mt-1 font-display text-3xl font-semibold text-foreground">Weche Mantie e Buk</h1>
-              <p className="mt-1 text-sm text-muted-foreground">Choose a section to open its first hymn.</p>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-emerald-900">Kitap Wend Nyasaye</p>
+              <h1 className="mt-1 font-display text-3xl font-semibold text-stone-900">Weche Mantie e Buk</h1>
+              <p className="mt-1 text-sm text-stone-600">Select a section to begin reading.</p>
             </div>
-            <BookOpen className="h-8 w-8 shrink-0 text-brand" aria-hidden />
+            <BookOpen className="h-8 w-8 shrink-0 text-emerald-900" aria-hidden />
           </div>
-          <div className="overflow-hidden rounded-2xl border border-border/70 bg-card shadow-soft">
+          <div className="relative mx-auto max-w-[38rem] overflow-hidden border border-stone-300/80 bg-[#fbf8ef] px-5 py-7 shadow-[0_18px_50px_rgba(45,35,20,0.22)] sm:px-10 sm:py-10 before:pointer-events-none before:absolute before:inset-y-0 before:left-3 before:w-px before:bg-stone-300/70">
             {hymnSections.map((section) => {
               const firstHymn = hymns.find((h) => h.number === section.start);
               return (
                 <Link
                   key={section.title}
                   to={"/hymn/" + section.start}
-                  className="flex min-h-14 items-center justify-between gap-4 border-b border-border/50 px-4 py-3 last:border-b-0 transition-colors hover:bg-secondary/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                  className="relative flex min-h-14 items-center justify-between gap-4 border-b border-stone-300/70 px-3 py-3 last:border-b-0 transition-colors hover:bg-amber-100/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-800"
                 >
                   <span className="min-w-0">
-                    <span className="block font-semibold text-foreground">{section.title}</span>
-                    <span className="mt-0.5 block truncate text-xs text-muted-foreground">
+                    <span className="block font-serif text-lg font-semibold text-stone-900">{section.title}</span>
+                    <span className="mt-0.5 block truncate font-serif text-xs text-stone-600">
                       {firstHymn ? firstHymn.title : "Hymn " + section.start}
                     </span>
                   </span>
-                  <span className="flex shrink-0 items-center gap-2 text-sm tabular-nums text-muted-foreground">
+                  <span className="flex shrink-0 items-center gap-2 font-serif text-sm tabular-nums text-stone-600">
                     {section.start === section.end ? section.start : section.start + "–" + section.end}
-                    <ArrowRight className="h-4 w-4 text-brand" aria-hidden />
+                    <ArrowRight className="h-4 w-4 text-emerald-900" aria-hidden />
                   </span>
                 </Link>
               );
             })}
           </div>
-          <Button type="button" variant="outline" onClick={() => setShowContents(false)} className="mt-6 h-12 w-full rounded-full">
+          <Button type="button" variant="outline" onClick={() => setShowContents(false)} className="mx-auto mt-6 flex h-12 w-full max-w-[38rem] rounded-full border-stone-400 bg-stone-100 text-stone-800 hover:bg-white">
             Browse all 267 hymns
           </Button>
-          <p className="mt-4 text-center text-xs text-muted-foreground">
+          <p className="mx-auto mt-4 max-w-[38rem] text-center text-xs text-stone-600">
             Select a section above to begin reading, then use the previous and next controls to move through the hymns.
           </p>
         </div>
