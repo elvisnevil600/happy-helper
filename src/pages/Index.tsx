@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
-import { ArrowRight, Search, X } from "lucide-react";
+import { ArrowRight, BookOpen, Search, X } from "lucide-react";
+import { Link } from "react-router-dom";
 import coverImage from "@/assets/luo-hymnal-cover.jpg.asset.json";
 import AppHeader from "@/components/AppHeader";
 import CelestialBackground from "@/components/CelestialBackground";
@@ -10,6 +11,24 @@ import { useHymns } from "@/hooks/useHymns";
 import { searchHymns } from "@/services/search/hymnSearch";
 
 const ENTRY_SESSION_KEY = "luo-hymnal-entry-seen";
+
+const hymnSections = [
+  { title: "Fak gi Dend", start: 1, end: 37 },
+  { title: "Wuodh Ja-Kristo", start: 38, end: 80 },
+  { title: "Jip gi Geno", start: 81, end: 109 },
+  { title: "Lamo", start: 110, end: 137 },
+  { title: "Nyual Yesu (Kristmas)", start: 138, end: 148 },
+  { title: "Wende Sawo", start: 149, end: 164 },
+  { title: "Chier", start: 165, end: 166 },
+  { title: "Polo", start: 167, end: 186 },
+  { title: "Warrok", start: 187, end: 213 },
+  { title: "Luong", start: 214, end: 227 },
+  { title: "Lando Wach", start: 228, end: 236 },
+  { title: "Wiro mar Ruodhwa", start: 237, end: 245 },
+  { title: "Wende Nyithindo", start: 246, end: 263 },
+  { title: "Kend Maier", start: 264, end: 266 },
+  { title: "Wimbo wa Taifa", start: 267, end: 267 },
+];
 
 const hasEnteredThisSession = () => {
   try {
@@ -23,6 +42,7 @@ const Index = () => {
   const { hymns, loading, error } = useHymns();
   const [query, setQuery] = useState("");
   const [showCover, setShowCover] = useState(() => !hasEnteredThisSession());
+  const [showContents, setShowContents] = useState(false);
 
   const filtered = useMemo(
     () => searchHymns(hymns, query).map((r) => r.hymn),
@@ -36,6 +56,7 @@ const Index = () => {
       // Keep the current visit usable even if browser storage is unavailable.
     }
     setShowCover(false);
+    setShowContents(true);
   };
 
   if (showCover) {
@@ -75,6 +96,52 @@ const Index = () => {
           </Button>
           <p className="mt-4 text-xs text-muted-foreground">
             A Ministry of the African Inland Church
+          </p>
+        </div>
+      </main>
+    );
+  }
+
+  if (showContents) {
+    return (
+      <main className="min-h-[100svh] bg-background px-4 pb-10 pt-8 sm:px-6">
+        <div className="mx-auto max-w-3xl">
+          <div className="mb-6 flex items-center justify-between gap-3">
+            <div>
+              <p className="text-[11px] uppercase tracking-[0.22em] text-brand">Kitap Wend Nyasaye</p>
+              <h1 className="mt-1 font-display text-3xl font-semibold text-foreground">Weche Mantie e Buk</h1>
+              <p className="mt-1 text-sm text-muted-foreground">Choose a section to open its first hymn.</p>
+            </div>
+            <BookOpen className="h-8 w-8 shrink-0 text-brand" aria-hidden />
+          </div>
+          <div className="overflow-hidden rounded-2xl border border-border/70 bg-card shadow-soft">
+            {hymnSections.map((section) => {
+              const firstHymn = hymns.find((h) => h.number === section.start);
+              return (
+                <Link
+                  key={section.title}
+                  to={"/hymn/" + section.start}
+                  className="flex min-h-14 items-center justify-between gap-4 border-b border-border/50 px-4 py-3 last:border-b-0 transition-colors hover:bg-secondary/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                >
+                  <span className="min-w-0">
+                    <span className="block font-semibold text-foreground">{section.title}</span>
+                    <span className="mt-0.5 block truncate text-xs text-muted-foreground">
+                      {firstHymn ? firstHymn.title : "Hymn " + section.start}
+                    </span>
+                  </span>
+                  <span className="flex shrink-0 items-center gap-2 text-sm tabular-nums text-muted-foreground">
+                    {section.start === section.end ? section.start : section.start + "–" + section.end}
+                    <ArrowRight className="h-4 w-4 text-brand" aria-hidden />
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+          <Button type="button" variant="outline" onClick={() => setShowContents(false)} className="mt-6 h-12 w-full rounded-full">
+            Browse all 267 hymns
+          </Button>
+          <p className="mt-4 text-center text-xs text-muted-foreground">
+            Select a section above to begin reading, then use the previous and next controls to move through the hymns.
           </p>
         </div>
       </main>
