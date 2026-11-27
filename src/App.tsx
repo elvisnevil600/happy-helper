@@ -7,6 +7,8 @@ import Index from "./pages/Index.tsx";
 import HymnDetail from "./pages/HymnDetail.tsx";
 import Favorites from "./pages/Favorites.tsx";
 import Recent from "./pages/Recent.tsx";
+import Worship from "./pages/Worship.tsx";
+import WorshipService from "./pages/WorshipService.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -22,7 +24,8 @@ const App = () => (
           <Route path="/hymn/:number" element={<HymnDetail />} />
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/recent" element={<Recent />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/worship" element={<Worship />} />
+          <Route path="/worship/:id" element={<WorshipService />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
