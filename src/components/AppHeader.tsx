@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { BookOpen, Heart, History } from "lucide-react";
+import { BookOpen, CalendarDays, Heart, History } from "lucide-react";
 import BrandMark from "@/components/BrandMark";
 import { cn } from "@/lib/utils";
 
@@ -7,6 +7,7 @@ const items = [
   { to: "/", label: "Hymns", Icon: BookOpen },
   { to: "/favorites", label: "Favourites", Icon: Heart },
   { to: "/recent", label: "Recent", Icon: History },
+  { to: "/worship", label: "Worship", Icon: CalendarDays },
 ];
 
 const AppHeader = () => {
@@ -35,7 +36,10 @@ const AppHeader = () => {
 
           <nav aria-label="Primary" className="hidden items-center gap-1 sm:flex">
             {items.map(({ to, label, Icon }) => {
-              const active = pathname === to;
+              const active =
+                to === "/worship"
+                  ? pathname === to || pathname.startsWith("/worship/")
+                  : pathname === to;
               return (
                 <Link
                   key={to}
@@ -57,14 +61,16 @@ const AppHeader = () => {
         </div>
       </header>
 
-      {/* Mobile bottom tab bar */}
       <nav
         aria-label="Primary"
         className="fixed inset-x-0 bottom-0 z-40 border-t border-border/70 bg-background/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md sm:hidden"
       >
         <div className="flex items-stretch">
           {items.map(({ to, label, Icon }) => {
-            const active = pathname === to;
+            const active =
+              to === "/worship"
+                ? pathname === to || pathname.startsWith("/worship/")
+                : pathname === to;
             return (
               <Link
                 key={to}
