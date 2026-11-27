@@ -2,6 +2,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, ChevronLeft, ChevronRight, Heart, Minus, Plus } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import AppHeader from "@/components/AppHeader";
+import { InstrumentalPlayer } from "@/components/InstrumentalPlayer";
 import CelestialBackground from "@/components/CelestialBackground";
 import { Button } from "@/components/ui/button";
 import { useHymns } from "@/hooks/useHymns";
@@ -143,6 +144,8 @@ const HymnDetail = () => {
                 </Button>
               </div>
             </div>
+
+            <InstrumentalPlayer hymnNumber={hymn.number} />
 
             <div
               className="mx-auto mt-8 max-w-xl space-y-7 text-foreground md:mt-10"
